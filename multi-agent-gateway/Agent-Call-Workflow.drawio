@@ -1,0 +1,33 @@
+<mxfile host="app.diagrams.net" modified="2026-11-03T00:00:00.000Z" agent="Codex" version="24.7.17" type="device">
+  <diagram id="agent-call-workflow" name="Agent Call Workflow">
+    <mxGraphModel dx="1100" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="start" value="New request input&lt;br&gt;新请求输入" style="rounded=1;whiteSpace=wrap;html=1;arcSize=18;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=15;" vertex="1" parent="1"><mxGeometry x="390" y="30" width="250" height="60" as="geometry" /></mxCell>
+        <mxCell id="prepare" value="Prepare input for the agent&lt;br&gt;准备智能体输入" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=15;" vertex="1" parent="1"><mxGeometry x="390" y="125" width="250" height="65" as="geometry" /></mxCell>
+        <mxCell id="call" value="Send input to Agent API&lt;br&gt;将输入发送到智能体 API" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=15;" vertex="1" parent="1"><mxGeometry x="390" y="225" width="250" height="65" as="geometry" /></mxCell>
+        <mxCell id="api_ok" value="API call succeeded?&lt;br&gt;API 调用成功？" style="rhombus;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;" vertex="1" parent="1"><mxGeometry x="425" y="330" width="180" height="100" as="geometry" /></mxCell>
+        <mxCell id="parse" value="Receive and parse chat output&lt;br&gt;接收并解析聊天输出" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=15;" vertex="1" parent="1"><mxGeometry x="390" y="490" width="250" height="65" as="geometry" /></mxCell>
+        <mxCell id="valid" value="Chat output valid?&lt;br&gt;聊天输出有效？" style="rhombus;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;" vertex="1" parent="1"><mxGeometry x="425" y="590" width="180" height="100" as="geometry" /></mxCell>
+        <mxCell id="success" value="Record success&lt;br&gt;记录成功" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=15;" vertex="1" parent="1"><mxGeometry x="390" y="755" width="250" height="60" as="geometry" /></mxCell>
+        <mxCell id="return" value="Send response to user&lt;br&gt;将响应发送给用户" style="rounded=1;whiteSpace=wrap;html=1;arcSize=18;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=15;" vertex="1" parent="1"><mxGeometry x="390" y="855" width="250" height="60" as="geometry" /></mxCell>
+        <mxCell id="retry" value="Retry limit reached?&lt;br&gt;达到重试上限？" style="rhombus;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;" vertex="1" parent="1"><mxGeometry x="760" y="420" width="190" height="105" as="geometry" /></mxCell>
+        <mxCell id="unavailable" value="Record failure and mark agent unavailable&lt;br&gt;记录失败并将智能体标记为不可用" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;" vertex="1" parent="1"><mxGeometry x="735" y="620" width="240" height="75" as="geometry" /></mxCell>
+        <mxCell id="error" value="Return error to user&lt;br&gt;向用户返回错误" style="rounded=1;whiteSpace=wrap;html=1;arcSize=18;fillColor=#f8cecc;strokeColor=#b85450;fontSize=15;" vertex="1" parent="1"><mxGeometry x="735" y="755" width="240" height="60" as="geometry" /></mxCell>
+        <mxCell id="e1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" edge="1" parent="1" source="start" target="prepare"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" edge="1" parent="1" source="prepare" target="call"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" edge="1" parent="1" source="call" target="api_ok"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e4" value="Yes / 是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" edge="1" parent="1" source="api_ok" target="parse"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" edge="1" parent="1" source="parse" target="valid"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e6" value="Yes / 是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" edge="1" parent="1" source="valid" target="success"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" edge="1" parent="1" source="success" target="return"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e8" value="No / 否" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" edge="1" parent="1" source="api_ok" target="retry"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e9" value="No / 否" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" edge="1" parent="1" source="valid" target="retry"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e10" value="No / 否：重试" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" edge="1" parent="1" source="retry" target="call"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e11" value="Yes / 是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" edge="1" parent="1" source="retry" target="unavailable"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e12" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" edge="1" parent="1" source="unavailable" target="error"><mxGeometry relative="1" as="geometry" /></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,122 @@
+1. Agent Registry & Discovery（注册与发现）
+高频
+这是 Multi-Agent Gateway 的核心。
+1. Agent 如何注册到 Gateway？
+2. Agent 注册时需要提供哪些 Metadata？
+3. 如何支持 Agent 动态上线和下线？
+4. 如何检测 Agent 是否已经不可用？
+5. 如果多个 Agent 提供相同能力，如何选择？
+6. Agent 的 Metadata 存储在哪里？Redis、PostgreSQL 还是 Service Registry？
+7. 如何支持 Agent Versioning？
+8. 如何避免 Registry 中存在 Stale Agent？
+深入追问：
+- 如果 Agent 注册成功，但是还没有真正 Ready，怎么办？
+- 如果 Agent 实例突然 Crash，Gateway 如何感知？
+- 如果 Registry 有多个副本，如何保证注册信息一致性？
+2. Agent Routing（路由）
+高频
+1. Gateway 如何根据用户请求选择 Agent？
+2. 是基于 Agent Name、Capability 还是 Semantic Routing？
+3. 如果一个请求需要多个 Agent，如何决定调用顺序？
+4. 如何支持 Agent Priority？
+5. 如果某个 Agent 过载，是否可以自动路由到其他 Agent？
+6. 如何支持 Agent Version 的灰度发布？
+深入追问：
+- Semantic Routing 是否需要 Embedding？
+- 如果两个 Agent 都能处理请求，如何选择？
+- Routing Decision 是否需要缓存？
+- 如果 Routing Cache 与 Registry 不一致怎么办？
+3. Concurrency & Execution（并发执行）
+高频
+1. 如何支持大量并发 Agent Requests？
+2. 是否需要 Task Queue？
+3. 如何限制每个 Agent 的最大并发数？
+4. 如何避免某个 Agent 被大量请求打满？
+5. 如何支持多个 Agent 并行执行？
+6. 如何处理 Agent Execution Timeout？
+7. 如何支持 Request Cancellation？
+深入追问：
+- 如果一个 Workflow 包含 5 个 Agent，其中一个失败了怎么办？
+- 如何限制整个 Workflow 的执行时间？
+- 如何防止一个用户占用所有 Agent 的资源？
+- 如何实现 Backpressure？
+4. Reliability & Fault Tolerance（可靠性）
+高频
+1. Agent 调用失败后是否 Retry？
+2. 如何实现 Exponential Backoff？
+3. 如何避免 Retry Storm？
+4. 如何实现 Circuit Breaker？
+5. 如果 Agent 执行过程中 Gateway Crash，怎么办？
+6. 如何保证任务不会丢失？
+7. 如何处理 Duplicate Requests？
+8. 是否需要 Idempotency Key？
+最值得准备的场景：
+
+假设：
+- Gateway 接收到 Request A。
+- Gateway 将任务分发给 Agent A。
+- Agent A 已经执行成功。
+- 但是 Gateway 在收到 Response 前 Crash。
+重启后 Gateway 是否应该重新执行？
+
+这里会涉及：
+- At-least-once Delivery
+- At-most-once Delivery
+- Idempotency
+- Durable Execution
+- Task State Recovery
+5. State Management（状态管理）
+1. Agent 是否应该是 Stateless？
+2. Conversation State 存在哪里？
+3. 多个 Agent 如何共享 Context？
+4. 如何管理长期 Memory？
+5. 如何支持 Workflow Checkpoint？
+6. Gateway 如何恢复中断的 Workflow？
+7. 如何避免不同 Agent 修改同一份 State 产生冲突？
+需要区分：
+State	推荐存储
+Agent Registry	PostgreSQL / Redis
+Agent Heartbeat	Redis
+Task Queue	Kafka / SQS
+Workflow State	PostgreSQL
+Short-term Context	Redis
+Long-term Memory	Vector DB
+
+这里不是唯一方案，需要根据一致性、持久性和延迟要求选择。
+6. Scalability（扩展性）
+1. Gateway 本身如何水平扩展？
+2. 多个 Gateway 如何共享 Agent Registry？
+3. 如何避免 Registry 成为瓶颈？
+4. Agent 数量达到 100K 怎么办？
+5. 如何对 Agent Metadata 做 Partition？
+6. 如何支持多租户？
+7. 如何实现 Tenant-level Rate Limiting？
+7. Security & Isolation（安全隔离）
+1. Agent 注册时如何认证？
+2. 如何防止恶意 Agent 注册？
+3. Agent 之间是否允许直接通信？
+4. 如何控制 Agent 的访问权限？
+5. 如何防止 Prompt Injection？
+6. 如何隔离不同 Tenant 的 Context？
+7. 如何管理 API Keys 和 Secrets？
+8. Observability（可观测性）
+1. 如何追踪一个 Request 经过的所有 Agent？
+2. 如何实现 Distributed Tracing？
+3. 如何统计每个 Agent 的 Latency？
+4. 如何监控 Token Consumption？
+5. 如何定位 Agent 执行失败的原因？
+6. 如何追踪一个 Workflow 的完整执行链路？
+
+我认为最值得准备的 10 个 Follow-up
+如果我是 Senior Engineer 面试官，我会优先问下面这些：
+#	面试问题	考察能力
+1	How do you implement Agent Registration and Discovery?	Architecture
+2	How do you handle dynamic Agent lifecycle?	Distributed Systems
+3	How does the Gateway select the right Agent?	Routing
+4	How do you handle concurrent requests to the same Agent?	Concurrency
+5	What happens if an Agent crashes during execution?	Fault Tolerance
+6	How do you prevent duplicate Agent execution?	Correctness
+7	How do you persist and recover Workflow State?	State Management
+8	How do you scale the Gateway horizontally?	Scalability
+9	How do you handle Agent overload?	Load Balancing
+10	How do you support Agent versioning and rolling upgrades?	Production Engineering
